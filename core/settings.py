@@ -112,8 +112,13 @@ SPECTACULAR_SETTINGS = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=int(os.environ.get("ACCESS_TOKEN_LIFETIME", 15))
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=int(os.environ.get("REFRESH_TOKEN_LIFETIME", 1))
+
+    ),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
