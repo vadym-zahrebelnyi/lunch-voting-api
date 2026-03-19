@@ -10,9 +10,8 @@ class VoteAdmin(admin.ModelAdmin):
     readonly_fields = ("date",)
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related(
-            "employee", 
-            "menu__restaurant"
+        return (
+            super().get_queryset(request).select_related("employee", "menu__restaurant")
         )
 
     def has_add_permission(self, request):

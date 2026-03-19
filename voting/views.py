@@ -12,6 +12,7 @@ class VoteCreateView(generics.CreateAPIView):
     Endpoint for voting for a menu.
     Any authenticated employee can vote once per day.
     """
+
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -22,6 +23,7 @@ class TodayResultsView(generics.ListAPIView):
     Endpoint for getting current day results.
     Lists today's menus with their vote counts.
     """
+
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = MenuSerializer
 

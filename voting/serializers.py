@@ -27,7 +27,7 @@ class VoteSerializer(serializers.ModelSerializer):
             today = timezone.now().date()
             if Vote.objects.filter(employee=request.user, date=today).exists():
                 raise serializers.ValidationError("You have already voted today.")
-        
+
         return attrs
 
     def create(self, validated_data):
