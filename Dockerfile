@@ -1,5 +1,7 @@
 FROM python:3.12.8-slim AS builder
 
+ARG DEVELOPMENT=0
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
   PYTHONUNBUFFERED=1
 
@@ -9,7 +11,11 @@ WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --frozen --no-cache
+RUN if [ "$DEVELOPMENT" = "1" ]; then \
+  uv sync --frozen --no-cache; \
+  else \
+  uv sync --no-dev --frozen --no-cache; \
+  fi
 
 FROM python:3.12.8-slim
 
