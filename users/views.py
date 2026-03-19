@@ -9,8 +9,8 @@ from users.serializers import UserSerializer
 @extend_schema(
     summary="User registration",
     description=(
-            "Creates a new user account.\n\n"
-            "This endpoint is public and does not require authentication."
+        "Creates a new user account.\n\n"
+        "This endpoint is public and does not require authentication."
     ),
     request=UserSerializer,
     responses={
@@ -25,8 +25,8 @@ class CreateUserView(generics.CreateAPIView):
 @extend_schema(
     summary="Retrieve or update current user",
     description=(
-            "Returns or updates the authenticated user's profile.\n\n"
-            "Authentication: JWT required."
+        "Returns or updates the authenticated user's profile.\n\n"
+        "Authentication: JWT required."
     ),
     responses={
         200: UserSerializer,

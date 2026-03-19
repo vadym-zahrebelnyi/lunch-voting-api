@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 
 Employee = get_user_model()
 
+
 @admin.register(Employee)
 class UserAdmin(DjangoUserAdmin):
     """Define admin model for custom User model with no email field."""
