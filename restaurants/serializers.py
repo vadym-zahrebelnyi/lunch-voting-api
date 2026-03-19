@@ -10,9 +10,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 
 class MenuSerializer(serializers.ModelSerializer):
+    votes_count = serializers.IntegerField(read_only=True, required=False)
+
     class Meta:
         model = Menu
-        fields = ["id", "restaurant", "date", "items"]
+        fields = ["id", "restaurant", "date", "items", "votes_count"]
 
     def validate_date(self, value):
         if value < timezone.now().date():
