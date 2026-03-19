@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
@@ -36,7 +35,6 @@ INSTALLED_APPS += [
     "users",
     "restaurants",
     "voting",
-    "core",
 ]
 
 MIDDLEWARE = [
@@ -76,7 +74,9 @@ WSGI_APPLICATION = "core.wsgi.application"
 AUTH_USER_MODEL = "users.Employee"
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -99,9 +99,6 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
-    ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -112,8 +109,12 @@ SPECTACULAR_SETTINGS = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=int(os.environ.get("ACCESS_TOKEN_LIFETIME", 15))
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=int(os.environ.get("REFRESH_TOKEN_LIFETIME", 1))
+    ),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 

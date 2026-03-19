@@ -20,3 +20,10 @@ dev = [
     "pytest-django>=4.12.0",
     "ruff>=0.15.6",
 ]
+
+[tool.ruff]
+exclude = [
+    "**/migrations/*.py",
+    ".venv",
+    "env",
+]
