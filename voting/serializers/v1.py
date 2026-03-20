@@ -1,4 +1,4 @@
-from .base import BaseVoteResultSerializer
+from voting.serializers.base import BaseVoteResultSerializer
 
 class VoteResultV1Serializer(BaseVoteResultSerializer):
     """

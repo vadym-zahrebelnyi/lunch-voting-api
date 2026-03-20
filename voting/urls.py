@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CastVoteView, TodayResultsView
+from voting.views import CastVoteView, TodayResultsView
 
 app_name = "voting"
 

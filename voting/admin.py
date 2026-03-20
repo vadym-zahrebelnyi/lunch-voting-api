@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vote
+from voting.models import Vote
 
 
 @admin.register(Vote)

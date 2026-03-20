@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from .models import Restaurant, Menu
+from restaurants.models import Restaurant, Menu
 
 
 class RestaurantService:

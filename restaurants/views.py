@@ -1,8 +1,8 @@
 from rest_framework import generics, permissions
 from core.mixins import VersionedSerializerMixin
-from .serializers.versions import MENU_SERIALIZERS
-from .serializers.base import RestaurantSerializer, MenuUploadSerializer
-from .services import RestaurantService, MenuService
+from restaurants.serializers.versions import MENU_SERIALIZERS
+from restaurants.serializers.base import RestaurantSerializer, MenuUploadSerializer
+from restaurants.services import RestaurantService, MenuService
 
 
 class RestaurantViewSet(generics.ListCreateAPIView):

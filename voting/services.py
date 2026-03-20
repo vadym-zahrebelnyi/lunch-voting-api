@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.db.models import Count
 from restaurants.models import Menu
-from .models import Vote
+from voting.models import Vote
 
 
 class VoteService:

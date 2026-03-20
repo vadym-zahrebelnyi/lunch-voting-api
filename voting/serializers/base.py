@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from django.core.exceptions import ValidationError as DjangoValidationError
-from ..models import Vote
-from ..services import VoteService
+from voting.models import Vote
+from voting.services import VoteService
 
 class VoteCreateSerializer(serializers.ModelSerializer):
     menu_id = serializers.IntegerField(write_only=True)

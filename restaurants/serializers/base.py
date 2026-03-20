@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from django.core.exceptions import ValidationError as DjangoValidationError
-from ..models import Restaurant, Menu
-from ..services import MenuService
+from restaurants.models import Restaurant, Menu
+from restaurants.services import MenuService
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
