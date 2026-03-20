@@ -1,21 +1,37 @@
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from ..services import UserService
+from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers
+
 
 User = get_user_model()
 
 
-class RegisterSerializer(serializers.ModelSerializer):
-    """
-    Serializer for user registration.
-    Uses UserService for data manipulation.
-    """
+class UserSerializer(serializers.ModelSerializer):
+    """Serializer class for Guest model"""
+
     class Meta:
         model = User
-        fields = ("id", "email", "password", "first_name", "last_name")
+        fields = ("id", "email", "password", "first_name", "last_name", "is_staff")
+        read_only_fields = ("is_staff",)
         extra_kwargs = {
-            "password": {"write_only": True, "min_length": 5}
+            "password": {
+                "write_only": True,
+                "min_length": 5,
+                "style": {"input_type": "password"},
+                "label": _("Password"),
+            }
         }
 
     def create(self, validated_data):
-        return UserService.create_user(**validated_data)
+        """Create a new user with encrypted password and return it"""
+        return User.objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        """Update a user, set the password correctly and return it"""
+        password = validated_data.pop("password", None)
+        user = super().update(instance, validated_data)
+        if password:
+            user.set_password(password)
+            user.save()
+
+        return user

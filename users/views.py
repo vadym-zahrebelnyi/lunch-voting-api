@@ -1,7 +1,5 @@
 from rest_framework import generics, permissions
-from core.mixins import VersionedSerializerMixin
-from .serializers.versions import USER_SERIALIZERS
-from .serializers.base import RegisterSerializer
+from .serializers.base import UserSerializer
 from .services import UserService
 
 
@@ -10,18 +8,17 @@ class CreateUserView(generics.CreateAPIView):
     POST /api/auth/register/
     PUBLIC endpoint for registration.
     """
-    serializer_class = RegisterSerializer
+    serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
 
-class ManageUserView(VersionedSerializerMixin, generics.RetrieveUpdateAPIView):
+class ManageUserView(generics.RetrieveUpdateAPIView):
     """
     GET, PUT, PATCH /api/users/me/
     Returns or updates the authenticated user's profile.
-    Response format is versioned for GET requests.
     """
     permission_classes = [permissions.IsAuthenticated]
-    versioned_serializers = USER_SERIALIZERS
+    serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
