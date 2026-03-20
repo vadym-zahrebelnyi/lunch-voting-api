@@ -6,6 +6,8 @@ from voting.services import VoteService
 
 
 class VoteCreateSerializer(serializers.ModelSerializer):
+    """Serializer for casting a vote."""
+
     menu_id = serializers.IntegerField(write_only=True)
 
     class Meta:
@@ -14,6 +16,7 @@ class VoteCreateSerializer(serializers.ModelSerializer):
         read_only_fields = ["id"]
 
     def create(self, validated_data):
+        """Create a vote using the service layer."""
         try:
             return VoteService.cast_vote(
                 employee=self.context["request"].user, menu_id=validated_data["menu_id"]
@@ -23,5 +26,7 @@ class VoteCreateSerializer(serializers.ModelSerializer):
 
 
 class BaseVoteResultSerializer(serializers.Serializer):
+    """Base serializer for vote results aggregation."""
+
     restaurant = serializers.CharField(source="restaurant.name")
     votes = serializers.IntegerField(source="votes_count")

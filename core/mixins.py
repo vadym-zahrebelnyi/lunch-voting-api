@@ -6,6 +6,16 @@ from django.core.exceptions import ImproperlyConfigured
 
 
 class VersionedSerializerMixin:
+    """
+    Selects a serializer class based on the request's API version.
+
+    versioned_serializers: mapping of version tuples (major, minor, patch)
+        to serializer classes. Must be defined in the subclass.
+
+    get_serializer_class(): returns the serializer for the request version,
+        falling back to the closest lower version if needed.
+    """
+
     versioned_serializers: Mapping[
         Tuple[int, int, int], Type[serializers.Serializer]
     ] = MappingProxyType({})

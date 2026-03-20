@@ -4,6 +4,11 @@ from restaurants.models import Menu
 
 
 class Vote(models.Model):
+    """
+    Represents a user's vote for a restaurant menu on a specific day.
+    Ensures only one vote per user per day.
+    """
+
     employee = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="votes"
     )
