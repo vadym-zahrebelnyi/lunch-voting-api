@@ -18,7 +18,7 @@ from voting.services import VoteService
                 OpenApiExample(name="v1", value="1.0.0"),
                 OpenApiExample(name="v2", value="2.0.0"),
             ],
-            location='header',
+            location="header",
         )
     ],
     description="Retrieve today's voting results. Response is versioned depending on the X-App-Version header.",
@@ -33,9 +33,7 @@ class TodayResultsView(VersionedSerializerMixin, generics.ListAPIView):
         return VoteService.get_today_results()
 
 
-@extend_schema(
-    description="Allow authenticated users to cast a vote for today's menu."
-)
+@extend_schema(description="Allow authenticated users to cast a vote for today's menu.")
 class CastVoteView(generics.CreateAPIView):
     """Allow authenticated users to cast a vote."""
 

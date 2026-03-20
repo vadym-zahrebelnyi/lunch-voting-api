@@ -45,7 +45,7 @@ class RestaurantViewSet(generics.ListCreateAPIView):
                 OpenApiExample(name="v1", value="1.0.0"),
                 OpenApiExample(name="v2", value="2.0.0"),
             ],
-            location='header',
+            location="header",
         )
     ],
     responses={200: "Versioned response depends on X-App-Version"},
@@ -60,7 +60,6 @@ class TodayMenusView(VersionedSerializerMixin, generics.ListAPIView):
 
     def get_queryset(self):
         return MenuService.get_today_menus()
-
 
 
 @extend_schema(
