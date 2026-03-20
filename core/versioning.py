@@ -11,6 +11,6 @@ class SemanticVersioning(versioning.BaseVersioning):
         raw = request.headers.get("X-App-Version", "1.0.0")
         try:
             parts = tuple(int(x) for x in raw.split("."))
-            return (parts + (0, 0, 0))[:3]  # always (major, minor, patch)
+            return (parts + (0, 0, 0))[:3]
         except (ValueError, AttributeError):
             return (1, 0, 0)
