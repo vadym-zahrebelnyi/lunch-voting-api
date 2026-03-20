@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Restaurant(models.Model):
+    """Represents a restaurant available for voting."""
+
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -9,6 +11,11 @@ class Restaurant(models.Model):
 
 
 class Menu(models.Model):
+    """
+    Represents a daily menu for a restaurant.
+    Ensures only one menu per restaurant per day.
+    """
+
     restaurant = models.ForeignKey(
         Restaurant, on_delete=models.CASCADE, related_name="menus"
     )

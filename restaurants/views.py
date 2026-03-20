@@ -17,7 +17,6 @@ class RestaurantViewSet(generics.ListCreateAPIView):
         return RestaurantService.get_all_restaurants()
 
     def get_permissions(self):
-        # Allow any authenticated user for GET, but only admin for POST
         if self.request.method == "POST":
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticated()]
@@ -45,5 +44,4 @@ class MenuUploadView(generics.CreateAPIView):
     serializer_class = MenuUploadSerializer
 
     def perform_create(self, serializer):
-        # We pass the restaurant_id from the URL to the service
         serializer.save(restaurant_id=self.kwargs["id"])
