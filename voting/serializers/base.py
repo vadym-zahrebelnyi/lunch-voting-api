@@ -4,12 +4,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from ..models import Vote
 from ..services import VoteService
 
-
 class VoteCreateSerializer(serializers.ModelSerializer):
-    """
-    Non-versioned serializer for creating votes.
-    Delegates business logic and validation to VoteService.
-    """
     menu_id = serializers.IntegerField(write_only=True)
 
     class Meta:
@@ -26,13 +21,6 @@ class VoteCreateSerializer(serializers.ModelSerializer):
         except DjangoValidationError as exc:
             raise DRFValidationError({"detail": exc.message})
 
-
-class MyVoteHistorySerializer(serializers.ModelSerializer):
-    """
-    Serializer for viewing own vote history.
-    """
-    restaurant_name = serializers.CharField(source="menu.restaurant.name")
-    
-    class Meta:
-        model = Vote
-        fields = ["id", "menu", "restaurant_name", "date"]
+class BaseVoteResultSerializer(serializers.Serializer):
+    restaurant = serializers.CharField(source="restaurant.name")
+    votes = serializers.IntegerField(source="votes_count")

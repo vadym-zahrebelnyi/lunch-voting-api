@@ -1,11 +1,10 @@
 from rest_framework import serializers
+from .base import BaseVoteResultSerializer
 
-
-class VoteResultV2Serializer(serializers.Serializer):
+class VoteResultV2Serializer(BaseVoteResultSerializer):
     """
-    Full response for newer app versions.
-    Returns a sorted list of all results.
+    v2: Full ranked list with menu details.
     """
-    restaurant = serializers.CharField(source="restaurant.name")
-    votes = serializers.IntegerField(source="votes_count")
-    menu_items = serializers.JSONField(source="items")
+    id = serializers.IntegerField()
+    date = serializers.DateField()
+    items = serializers.JSONField()

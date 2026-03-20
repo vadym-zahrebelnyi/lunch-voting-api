@@ -1,6 +1,7 @@
-from rest_framework import serializers
+from .base import BaseVoteResultSerializer
 
-
-class VoteResultV1Serializer(serializers.Serializer):
-    winner = serializers.CharField(source="restaurant.name")
-    votes = serializers.IntegerField(source="votes_count")
+class VoteResultV1Serializer(BaseVoteResultSerializer):
+    """
+    v1: Only winner info.
+    """
+    pass

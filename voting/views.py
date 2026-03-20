@@ -6,9 +6,6 @@ from .services import VoteService
 
 
 class TodayResultsView(VersionedSerializerMixin, generics.ListAPIView):
-    """
-    GET /api/votes/results/today/
-    """
     versioned_serializers = VOTE_RESULT_SERIALIZERS
 
     def get_queryset(self):
@@ -16,7 +13,4 @@ class TodayResultsView(VersionedSerializerMixin, generics.ListAPIView):
 
 
 class CastVoteView(generics.CreateAPIView):
-    """
-    POST /api/votes/
-    """
     serializer_class = VoteCreateSerializer
