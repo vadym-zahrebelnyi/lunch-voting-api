@@ -1,33 +1,16 @@
-from django.db.models import Count
-from django.utils import timezone
-from rest_framework import generics, permissions
-from restaurants.models import Menu
-from restaurants.serializers import MenuSerializer
-from .models import Vote
-from .serializers import VoteSerializer
+from rest_framework import generics
+from core.mixins import VersionedSerializerMixin
+from voting.serializers.versions import VOTE_RESULT_SERIALIZERS
+from voting.serializers.base import VoteCreateSerializer
+from voting.services import VoteService
 
 
-class VoteCreateView(generics.CreateAPIView):
-    """
-    Endpoint for voting for a menu.
-    Any authenticated employee can vote once per day.
-    """
-
-    queryset = Vote.objects.all()
-    serializer_class = VoteSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class TodayResultsView(generics.ListAPIView):
-    """
-    Endpoint for getting current day results.
-    Lists today's menus with their vote counts.
-    """
-
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = MenuSerializer
+class TodayResultsView(VersionedSerializerMixin, generics.ListAPIView):
+    versioned_serializers = VOTE_RESULT_SERIALIZERS
 
     def get_queryset(self):
-        today = timezone.now().date()
-        # Get today's menus and annotate each with the count of its votes
-        return Menu.objects.filter(date=today).annotate(votes_count=Count("votes"))
+        return VoteService.get_today_results()
+
+
+class CastVoteView(generics.CreateAPIView):
+    serializer_class = VoteCreateSerializer

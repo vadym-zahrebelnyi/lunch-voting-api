@@ -99,7 +99,6 @@ REST_FRAMEWORK = {
     # Versioning
     "DEFAULT_VERSIONING_CLASS": "core.versioning.SemanticVersioning",
     "DEFAULT_VERSION": (1, 0, 0),
-
     # Auth
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
