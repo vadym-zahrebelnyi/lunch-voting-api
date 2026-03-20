@@ -8,6 +8,7 @@ class CreateUserView(generics.CreateAPIView):
     POST /api/auth/register/
     PUBLIC endpoint for registration.
     """
+
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -17,6 +18,7 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
     GET, PUT, PATCH /api/users/me/
     Returns or updates the authenticated user's profile.
     """
+
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 

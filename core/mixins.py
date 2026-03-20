@@ -12,9 +12,7 @@ class VersionedSerializerMixin:
 
     def get_serializer_class(self):
         if not self.versioned_serializers:
-            raise ImproperlyConfigured(
-                "versioned_serializers must be defined"
-            )
+            raise ImproperlyConfigured("versioned_serializers must be defined")
 
         version = getattr(self.request, "version", (1, 0, 0))
 

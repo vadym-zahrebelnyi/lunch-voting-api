@@ -13,6 +13,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 class BaseMenuSerializer(serializers.Serializer):
     """Base serializer for common menu fields."""
+
     id = serializers.IntegerField()
     restaurant = serializers.CharField(source="restaurant.name")
     date = serializers.DateField()
@@ -24,6 +25,7 @@ class MenuUploadSerializer(serializers.ModelSerializer):
     Serializer used for uploading/updating a menu.
     Takes restaurant_id from view context.
     """
+
     class Meta:
         model = Menu
         fields = ["items"]
@@ -37,7 +39,7 @@ class MenuUploadSerializer(serializers.ModelSerializer):
         try:
             return MenuService.upload_menu(
                 restaurant_id=self.context["restaurant_id"],
-                items=validated_data["items"]
+                items=validated_data["items"],
             )
         except DjangoValidationError as exc:
             raise DRFValidationError({"detail": exc.message})

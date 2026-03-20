@@ -27,17 +27,21 @@ class MenuService:
     def upload_menu(restaurant_id, items, date=None):
         if date is None:
             date = timezone.now().date()
-            
+
         # Захист: чи існує ресторан
         if not Restaurant.objects.filter(id=restaurant_id).exists():
             raise ValidationError("Restaurant does not exist.")
-            
-        existing_menu = Menu.objects.filter(restaurant_id=restaurant_id, date=date).first()
+
+        existing_menu = Menu.objects.filter(
+            restaurant_id=restaurant_id, date=date
+        ).first()
         if existing_menu:
             if existing_menu.votes.exists():
-                raise ValidationError("Cannot update menu because voting has already started.")
+                raise ValidationError(
+                    "Cannot update menu because voting has already started."
+                )
             existing_menu.items = items
             existing_menu.save()
             return existing_menu
-            
+
         return Menu.objects.create(restaurant_id=restaurant_id, date=date, items=items)

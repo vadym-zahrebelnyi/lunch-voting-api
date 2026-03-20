@@ -10,6 +10,7 @@ class RestaurantViewSet(generics.ListCreateAPIView):
     GET /api/restaurants/ - List all restaurants.
     POST /api/restaurants/ - Create a restaurant (Admin only).
     """
+
     serializer_class = RestaurantSerializer
 
     def get_queryset(self):
@@ -27,6 +28,7 @@ class TodayMenusView(VersionedSerializerMixin, generics.ListAPIView):
     GET /api/menus/today/
     Returns all today's menus. Response format is versioned.
     """
+
     versioned_serializers = MENU_SERIALIZERS
 
     def get_queryset(self):

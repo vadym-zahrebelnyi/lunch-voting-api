@@ -10,7 +10,7 @@ class VoteService:
         today = timezone.now().date()
         return (
             Menu.objects.filter(date=today)
-            .annotate(votes_count=Count("votes")) # Унікальне ім'я
+            .annotate(votes_count=Count("votes"))  # Унікальне ім'я
             .select_related("restaurant")
             .order_by("-votes_count")
         )
@@ -18,8 +18,9 @@ class VoteService:
     @staticmethod
     def cast_vote(employee, menu_id):
         from django.core.exceptions import ValidationError
+
         today = timezone.now().date()
-        
+
         already_voted = Vote.objects.filter(employee=employee, date=today).exists()
         if already_voted:
             raise ValidationError("You have already voted today.")

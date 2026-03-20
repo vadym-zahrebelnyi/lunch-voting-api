@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from voting.models import Vote
 from voting.services import VoteService
 
+
 class VoteCreateSerializer(serializers.ModelSerializer):
     menu_id = serializers.IntegerField(write_only=True)
 
@@ -15,11 +16,11 @@ class VoteCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         try:
             return VoteService.cast_vote(
-                employee=self.context["request"].user,
-                menu_id=validated_data["menu_id"]
+                employee=self.context["request"].user, menu_id=validated_data["menu_id"]
             )
         except DjangoValidationError as exc:
             raise DRFValidationError({"detail": exc.message})
+
 
 class BaseVoteResultSerializer(serializers.Serializer):
     restaurant = serializers.CharField(source="restaurant.name")
