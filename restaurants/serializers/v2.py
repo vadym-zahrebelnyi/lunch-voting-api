@@ -1,19 +1,7 @@
 from rest_framework import serializers
+from .base import BaseMenuSerializer
 
+class MenuV2Serializer(BaseMenuSerializer):
+    """v2: Adds last_updated for clarity."""
 
-class MenuV2Serializer(serializers.Serializer):
-    """
-    Detailed menu representation for modern apps.
-    """
-    id = serializers.IntegerField()
-    restaurant_id = serializers.IntegerField(source="restaurant.id")
-    restaurant_name = serializers.CharField(source="restaurant.name")
-    menu_items = serializers.JSONField(source="items")
-    date = serializers.DateField()
-    last_updated = serializers.SerializerMethodField()
-
-    def get_last_updated(self, obj):
-        # Additional field for v2
-        return obj.date.strftime("%Y-%m-%d")
-    
-    # Not inheriting from V1 as structure differs for clarity
+    last_updated = serializers.DateField(source="date")
