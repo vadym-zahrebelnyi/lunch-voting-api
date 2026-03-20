@@ -2,13 +2,13 @@ from django.urls import path
 from restaurants.views import (
     RestaurantViewSet,
     MenuUploadView,
+    TodayMenusView
 )
 
 app_name = "restaurants"
 
 urlpatterns = [
-    # Creating restaurant (POST) and list (GET)
     path("", RestaurantViewSet.as_view(), name="restaurant_list_create"),
-    # Menu upload for a specific restaurant
     path("<int:id>/menus/", MenuUploadView.as_view(), name="upload_menu"),
+    path("today/", TodayMenusView.as_view(), name="restaurants_menus_today")
 ]
