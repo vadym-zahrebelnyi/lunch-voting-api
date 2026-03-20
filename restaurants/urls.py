@@ -1,10 +1,15 @@
 from django.urls import path
-from .views import RestaurantCreateView, MenuUploadView, CurrentDayMenuView
+from .views import (
+    RestaurantViewSet, 
+    MenuUploadView,
+)
 
 app_name = "restaurants"
 
 urlpatterns = [
-    path("create/", RestaurantCreateView.as_view(), name="create_restaurant"),
-    path("menu/upload/", MenuUploadView.as_view(), name="upload_menu"),
-    path("menu/today/", CurrentDayMenuView.as_view(), name="today_menu"),
+    # Creating restaurant (POST) and list (GET)
+    path("", RestaurantViewSet.as_view(), name="restaurant_list_create"),
+    
+    # Menu upload for a specific restaurant
+    path("<int:id>/menus/", MenuUploadView.as_view(), name="upload_menu"),
 ]

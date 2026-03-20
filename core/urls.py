@@ -6,9 +6,17 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    
+    # Auth & User Profile
     path("api/", include("users.urls", namespace="users")),
+    
+    # Restaurants & Menu Upload
     path("api/restaurants/", include("restaurants.urls", namespace="restaurants")),
-    path("api/voting/", include("voting.urls", namespace="voting")),
+    
+    # Voting
+    path("api/votes/", include("voting.urls", namespace="voting")),
+    
+    # Schema
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/schema/swagger-ui/",

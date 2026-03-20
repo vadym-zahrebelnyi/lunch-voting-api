@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import VoteCreateView, TodayResultsView
+from .views import CastVoteView, TodayResultsView
 
 app_name = "voting"
 
 urlpatterns = [
-    path("vote/", VoteCreateView.as_view(), name="vote"),
-    path("results/", TodayResultsView.as_view(), name="results"),
+    # POST /api/votes/
+    path("", CastVoteView.as_view(), name="vote"),
+    # GET /api/votes/results/today/
+    path("results/today/", TodayResultsView.as_view(), name="results_today"),
 ]

@@ -1,40 +1,47 @@
 from rest_framework import generics, permissions
-from django.utils import timezone
-from .models import Restaurant, Menu
-from .serializers import RestaurantSerializer, MenuSerializer
+from core.mixins import VersionedSerializerMixin
+from .serializers.versions import MENU_SERIALIZERS
+from .serializers.base import RestaurantSerializer, MenuUploadSerializer
+from .services import RestaurantService, MenuService
 
 
-class RestaurantCreateView(generics.CreateAPIView):
+class RestaurantViewSet(generics.ListCreateAPIView):
     """
-    Endpoint for creating a restaurant.
-    Only admin users should be allowed to create restaurants.
+    GET /api/restaurants/ - List all restaurants.
+    POST /api/restaurants/ - Create a restaurant (Admin only).
     """
-
-    queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
-    permission_classes = [permissions.IsAdminUser]
+
+    def get_queryset(self):
+        return RestaurantService.get_all_restaurants()
+
+    def get_permissions(self):
+        # Allow any authenticated user for GET, but only admin for POST
+        if self.request.method == "POST":
+            return [permissions.IsAdminUser()]
+        return [permissions.IsAuthenticated()]
+
+
+class TodayMenusView(VersionedSerializerMixin, generics.ListAPIView):
+    """
+    GET /api/menus/today/
+    Returns all today's menus. Response format is versioned.
+    """
+    versioned_serializers = MENU_SERIALIZERS
+
+    def get_queryset(self):
+        return MenuService.get_today_menus()
 
 
 class MenuUploadView(generics.CreateAPIView):
     """
-    Endpoint for uploading a menu for a restaurant.
-    Only admin users should be allowed to upload menus.
+    POST /api/restaurants/{id}/menus/
+    Uploads menu for a specific restaurant for today (Admin only).
     """
 
-    queryset = Menu.objects.all()
-    serializer_class = MenuSerializer
     permission_classes = [permissions.IsAdminUser]
+    serializer_class = MenuUploadSerializer
 
-
-class CurrentDayMenuView(generics.ListAPIView):
-    """
-    Endpoint for getting current day menu for all restaurants.
-    Any authenticated user can view today's menu.
-    """
-
-    serializer_class = MenuSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        today = timezone.now().date()
-        return Menu.objects.filter(date=today)
+    def perform_create(self, serializer):
+        # We pass the restaurant_id from the URL to the service
+        serializer.save(restaurant_id=self.kwargs["id"])
