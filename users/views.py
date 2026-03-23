@@ -2,7 +2,6 @@ from rest_framework import generics, permissions
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
 from users.serializers.base import UserSerializer
-from users.services import UserService
 
 
 @extend_schema(
@@ -73,4 +72,4 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
     def perform_update(self, serializer):
-        UserService.update_user(self.get_object(), **serializer.validated_data)
+        serializer.save()
