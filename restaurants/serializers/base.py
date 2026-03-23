@@ -23,7 +23,7 @@ class BaseMenuSerializer(serializers.Serializer):
 class MenuUploadSerializer(serializers.ModelSerializer):
     """
     Serializer used for uploading/updating a menu.
-    Takes restaurant_id from view context.
+    Takes restaurant_id from validated_data (passed from view.save()).
     """
 
     class Meta:
@@ -38,7 +38,7 @@ class MenuUploadSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         try:
             return MenuService.upload_menu(
-                restaurant_id=self.context["restaurant_id"],
+                restaurant_id=validated_data["restaurant_id"],
                 items=validated_data["items"],
             )
         except DjangoValidationError as exc:
