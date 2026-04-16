@@ -44,7 +44,7 @@ Lunch Voting API is a Django REST Framework application for managing daily resta
 cp .env.sample .env
 ````
 
-2. Build and start the development container:
+1. Build and start the development container:
 
 ```bash
 docker compose up --build
@@ -52,25 +52,25 @@ docker compose up --build
 
 > This will run migrations automatically and start the development server on `0.0.0.0:8000`.
 
-3. Access the API:
+1. Access the API:
 
 ```
 http://127.0.0.1:8000/
 ```
 
-4. Optional: If `DEVELOPMENT=1` you can use Django Debug Toolbar, `ruff`, `pytest`, etc. inside the container.
+1. Optional: If `DEVELOPMENT=1` you can use Django Debug Toolbar, `ruff`, `pytest`, etc. inside the container.
 
 ---
 
 ## Running DEV Commands
 
-### Install dependencies outside of docker:
+### Install dependencies outside of docker
 
 ```bash
 uv sync
 ```
 
-### Create superuser:
+### Create superuser
 
 ```bash
 docker compose run --rm api sh -c "python manage.py createsuperuser"
@@ -153,8 +153,8 @@ POSTGRES_PORT=
 
 ## API Documentation
 
-* OpenAPI schema is generated via **drf-spectacular**
-* Access Swagger UI at:
+- OpenAPI schema is generated via **drf-spectacular**
+- Access Swagger UI at:
 
 ```
 http://127.0.0.1:8000/api/schema/swagger-ui/
@@ -180,18 +180,18 @@ http://127.0.0.1:8000/api/schema/swagger-ui/
 
 > Notes:
 >
-> * Replace `<ACCESS_TOKEN>` with a valid JWT access token.
-> * `X-App-Version` header allows testing different API versions (`1.0.0`, `2.0.0`, etc.).
-> * Admin endpoints require the user to have `is_staff=True`.
-> * Menus cannot be modified once voting has started.
+> - Replace `<ACCESS_TOKEN>` with a valid JWT access token.
+> - `X-App-Version` header allows testing different API versions (`1.0.0`, `2.0.0`, etc.).
+> - Admin endpoints require the user to have `is_staff=True`.
+> - Menus cannot be modified once voting has started.
 
 ---
 
 ## Manual Testing
 
-* Create a user via admin or shell.
-* Add restaurants and menus.
-* Test voting via Postman, curl, or similar tools.
+- Create a user via admin or shell.
+- Add restaurants and menus.
+- Test voting via Postman, curl, or similar tools.
 
 ### Example: Fetch today's results with versioning
 
@@ -202,3 +202,4 @@ curl -X 'GET' \
   -H 'Authorization: Bearer <ACCESS_TOKEN>' \
   -H 'X-App-Version: 2.0.0'
 ```
+
